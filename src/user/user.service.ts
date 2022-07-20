@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 import { JWT_SECRET } from 'src/environment/config';
-import { UserResponseInterface } from 'src/user/types/userResponse.interface';
+import { UserResponseInterface } from 'src/user/types/user-response.interface';
 import { LoginUserDto } from 'src/user/dto/loginUser.dto';
 import { compare } from 'bcrypt';
 
@@ -73,6 +73,14 @@ export class UserService {
     delete userByEmail.password;
 
     return userByEmail;
+  }
+
+  async findById(id: number): Promise<UserEntity> {
+    const userById = await this.userRepository.findOne({
+      id,
+    });
+
+    return userById;
   }
 
   buildUserResponse(user: UserEntity): UserResponseInterface {
