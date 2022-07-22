@@ -8,6 +8,7 @@ import { JWT_SECRET } from 'src/environment/config';
 import { UserResponseInterface } from 'src/user/types/user-response.interface';
 import { LoginUserDto } from 'src/user/dto/loginUser.dto';
 import { compare } from 'bcrypt';
+import { UpdateUserDto } from 'src/user/dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
@@ -75,12 +76,51 @@ export class UserService {
     return userByEmail;
   }
 
+  async updateUser(
+    userId: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserEntity> {
+    const user = await this.findById(userId);
+
+    const fieldsForUpdate = ['email', 'username', 'password', 'image', 'bio'];
+
+    for (const field of fieldsForUpdate) {
+      if (updateUserDto[field]) {
+        if (field === 'email' && updateUserDto.email !== user.email) {
+          const userByEmail = await this.userRepository.findOne({
+            email: updateUserDto.email,
+          });
+
+          if (userByEmail)
+            throw new HttpException(
+              'Email is taken',
+              HttpStatus.UNPROCESSABLE_ENTITY,
+            );
+        }
+
+        if (field === 'username' && updateUserDto.username !== user.username) {
+          const userByUsername = await this.userRepository.findOne({
+            username: updateUserDto.username,
+          });
+
+          if (userByUsername)
+            throw new HttpException(
+              'username is taken',
+              HttpStatus.UNPROCESSABLE_ENTITY,
+            );
+        }
+
+        user[field] = updateUserDto[field];
+      }
+    }
+
+    return this.userRepository.save(user);
+  }
+
   async findById(id: number): Promise<UserEntity> {
-    const userById = await this.userRepository.findOne({
+    return this.userRepository.findOne({
       id,
     });
-
-    return userById;
   }
 
   buildUserResponse(user: UserEntity): UserResponseInterface {
