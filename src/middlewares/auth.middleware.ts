@@ -3,7 +3,7 @@ import { NextFunction, Response } from 'express';
 import { ExpressRequestInterface } from 'src/types/express-request.interface';
 import { verify } from 'jsonwebtoken';
 import { JWT_SECRET } from 'src/environment/config';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/user/user.service';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -21,9 +21,7 @@ export class AuthMiddleware implements NestMiddleware {
     try {
       const tokenPayload = verify(token, JWT_SECRET) as { id: number };
 
-      const user = await this.userService.findById(tokenPayload?.id);
-
-      req.user = user;
+      req.user = await this.userService.findById(tokenPayload?.id);
     } catch (e) {
       req.user = null;
     }

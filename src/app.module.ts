@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { AppController } from 'src/app.controller';
-import { TagModule } from 'src/tag/tag.module';
+import { TagModule } from 'src/modules/tag/tag.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
+import { UserModule } from './modules/user/user.module';
 import typeormConfig from 'src/ormconfig';
 import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 

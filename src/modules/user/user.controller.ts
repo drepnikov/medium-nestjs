@@ -8,14 +8,14 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
-import { CreateUserDto } from 'src/user/dto/createUser.dto';
-import { UserResponseInterface } from 'src/user/types/user-response.interface';
-import { LoginUserDto } from 'src/user/dto/loginUser.dto';
-import { User } from 'src/user/decorators/user.decorator';
-import { UserEntity } from 'src/user/user.entity';
-import { AuthQuard } from 'src/user/guards/auth.quard';
-import { UpdateUserDto } from 'src/user/dto/updateUser.dto';
+import { UserService } from 'src/modules/user/user.service';
+import { CreateUserDto } from 'src/modules/user/dto/createUser.dto';
+import { UserResponseInterface } from 'src/modules/user/types/user-response.interface';
+import { LoginUserDto } from 'src/modules/user/dto/loginUser.dto';
+import { User } from 'src/modules/user/decorators/user.decorator';
+import { UserEntity } from 'src/modules/user/user.entity';
+import { AuthQuard } from 'src/modules/user/guards/auth.quard';
+import { UpdateUserDto } from 'src/modules/user/dto/updateUser.dto';
 
 @Controller()
 export class UserController {
