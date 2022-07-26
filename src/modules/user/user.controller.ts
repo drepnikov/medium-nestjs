@@ -17,7 +17,7 @@ import { UserEntity } from 'src/modules/user/user.entity';
 import { AuthQuard } from 'src/modules/user/guards/auth.quard';
 import { UpdateUserDto } from 'src/modules/user/dto/updateUser.dto';
 
-@Controller()
+@Controller('articles')
 export class UserController {
   constructor(private userService: UserService) {}
 
