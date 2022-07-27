@@ -3,7 +3,7 @@ import { TagService } from 'src/modules/tag/tag.service';
 
 @Controller('tags')
 export class TagController {
-  constructor(private tagService: TagService) {}
+  constructor(private readonly tagService: TagService) {}
 
   @Get()
   async findAll(): Promise<{ tags: string[] }> {
